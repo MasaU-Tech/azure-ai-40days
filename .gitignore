@@ -1,0 +1,10 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# 環境変数
+.env
+
+# VS Code設定
+.vscode/
