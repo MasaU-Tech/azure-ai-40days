@@ -3,7 +3,7 @@ title: "Azure OpenAI 40日チャレンジ Day2 — Prompt Flowからgpt-4o-mini�
 emoji: "⚡"
 type: "tech"
 topics: ["azure", "openai", "promptflow", "python", "gpt4o"]
-published: false
+published: true
 ---
 
 ## ✍️ TL;DR
@@ -100,7 +100,7 @@ pf flow test --flow .
 }
 ```
 
-![pf flow test 結果スクリーンショット](../images/day2/pf_flow_test_result.png)
+![pf flow test 結果スクリーンショット](/images/day2/pf_flow_test_result.png)
 
 ---
 
