@@ -1,4 +1,11 @@
-# Azure OpenAI 40 Days Challenge - Day3
+---
+title: "【Azure OpenAI 40日】Day3：Prompt Flowでバッチ処理＆CSV出力"
+emoji: "📊"
+type: "tech"
+topics: ["Azure","OpenAI","Python","PromptFlow","Batch"]
+published: true
+---
+
 ## TL;DR
 - Day3では **Prompt Flowのバッチ実行** と **結果のCSV化** を行った  
 - 実行データから質問と回答をペアにして可視化  
