@@ -7,7 +7,7 @@ published: true
 ---
 
 ## TL;DR
-- Day3では **Prompt Flowのバッチ実行** と **結果のCSV化** を行った  
+- Dgitay3では **Prompt Flowのバッチ実行** と **結果のCSV化** を行った  
 - 実行データから質問と回答をペアにして可視化  
 - PowerShell と `flow.py` 修正版でつまづきを解消  
 
@@ -58,9 +58,9 @@ Get-Content .\flow_outputs.jsonl -Encoding UTF8 |
 
 ## 3. 検証結果
 - Prompt Flow バッチ実行画面
-![](/image/day3/run_batch.png)  
+![](/images/day3/run_batch.png)  
 - `answers.csv` の先頭数行（質問と回答が並んでいる部分）  
-![](/image/day3/answers.png)  
+![](/images/day3/answers.png)  
 ---
 
 ## 4. Day3のやったこと振り返り
