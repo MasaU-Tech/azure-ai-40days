@@ -8,3 +8,5 @@ __pycache__/
 
 # VS Code設定
 .vscode/
+
+node_modules/
