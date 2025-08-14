@@ -1,5 +1,5 @@
 ---
-title: "Azure OpenAI 40日チャレンジ Day2 — Prompt Flowからgpt-4o-miniを呼び出す"
+title: "【Azure OpenAI 40日】Day2：Prompt Flowからgpt-4o-miniを呼び出す"
 emoji: "⚡"
 type: "tech"
 topics: ["azure", "openai", "promptflow", "python", "gpt4o"]
