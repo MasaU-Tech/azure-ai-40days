@@ -1,0 +1,107 @@
+{
+  "flow_runs": [
+    {
+      "run_id": "30b55189-7523-49b5-b8e3-61b1fa5a7071_0",
+      "status": "Completed",
+      "error": null,
+      "inputs": {
+        "user_input": "Prompt FlowからAzure OpenAIを呼び出せた？"
+      },
+      "output": {
+        "answer": {
+          "user_input": "Prompt FlowからAzure OpenAIを呼び出せた？",
+          "answer": "はい、Prompt FlowからAzure OpenAIを呼び出すことは可能です。具体的には、Azure OpenAIのAPIを利用して、テキスト生成や質問応答などの結果を得ることができます。設定方法には、APIキーの取得やエンドポイントの設定が含まれます。詳細な手順が必要であれば、お知らせください。"
+        }
+      },
+      "metrics": null,
+      "request": null,
+      "parent_run_id": "30b55189-7523-49b5-b8e3-61b1fa5a7071",
+      "root_run_id": "30b55189-7523-49b5-b8e3-61b1fa5a7071",
+      "source_run_id": null,
+      "flow_id": "default_flow_id",
+      "start_time": "2025-08-14T15:18:47.620223Z",
+      "end_time": "2025-08-14T15:18:48.974051Z",
+      "index": 0,
+      "api_calls": [
+        {
+          "name": "flow",
+          "node_name": "flow",
+          "type": "Flow",
+          "start_time": 1755152327.620223,
+          "end_time": 1755152328.974051,
+          "children": [],
+          "system_metrics": {
+            "duration": 1.353828,
+            "prompt_tokens": 0,
+            "completion_tokens": 0,
+            "total_tokens": 0
+          },
+          "inputs": {
+            "user_input": "Prompt FlowからAzure OpenAIを呼び出せた？"
+          },
+          "output": {
+            "answer": {
+              "user_input": "Prompt FlowからAzure OpenAIを呼び出せた？",
+              "answer": "はい、Prompt FlowからAzure OpenAIを呼び出すことは可能です。具体的には、Azure OpenAIのAPIを利用して、テキスト生成や質問応答などの結果を得ることができます。設定方法には、APIキーの取得やエンドポイントの設定が含まれます。詳細な手順が必要であれば、お知らせください。"
+            }
+          },
+          "error": null
+        }
+      ],
+      "name": "",
+      "description": "",
+      "tags": null,
+      "system_metrics": {
+        "duration": 1.353828,
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "result": {
+        "answer": {
+          "user_input": "Prompt FlowからAzure OpenAIを呼び出せた？",
+          "answer": "はい、Prompt FlowからAzure OpenAIを呼び出すことは可能です。具体的には、Azure OpenAIのAPIを利用して、テキスト生成や質問応答などの結果を得ることができます。設定方法には、APIキーの取得やエンドポイントの設定が含まれます。詳細な手順が必要であれば、お知らせください。"
+        }
+      },
+      "upload_metrics": false,
+      "otel_trace_id": null,
+      "message_format": "basic"
+    }
+  ],
+  "node_runs": [
+    {
+      "node": "gpt_answer",
+      "flow_run_id": "30b55189-7523-49b5-b8e3-61b1fa5a7071",
+      "run_id": "30b55189-7523-49b5-b8e3-61b1fa5a7071_gpt_answer_0",
+      "status": "Completed",
+      "inputs": {
+        "prompt": "Prompt FlowからAzure OpenAIを呼び出せた？"
+      },
+      "output": {
+        "user_input": "Prompt FlowからAzure OpenAIを呼び出せた？",
+        "answer": "はい、Prompt FlowからAzure OpenAIを呼び出すことは可能です。具体的には、Azure OpenAIのAPIを利用して、テキスト生成や質問応答などの結果を得ることができます。設定方法には、APIキーの取得やエンドポイントの設定が含まれます。詳細な手順が必要であれば、お知らせください。"
+      },
+      "metrics": null,
+      "error": null,
+      "parent_run_id": "30b55189-7523-49b5-b8e3-61b1fa5a7071_0",
+      "start_time": "2025-08-14T15:18:47.635921Z",
+      "end_time": "2025-08-14T15:18:48.957919Z",
+      "index": 0,
+      "api_calls": [],
+      "cached_run_id": null,
+      "cached_flow_run_id": null,
+      "logs": {
+        "stdout": "",
+        "stderr": ""
+      },
+      "system_metrics": {
+        "duration": 1.321998
+      },
+      "result": {
+        "user_input": "Prompt FlowからAzure OpenAIを呼び出せた？",
+        "answer": "はい、Prompt FlowからAzure OpenAIを呼び出すことは可能です。具体的には、Azure OpenAIのAPIを利用して、テキスト生成や質問応答などの結果を得ることができます。設定方法には、APIキーの取得やエンドポイントの設定が含まれます。詳細な手順が必要であれば、お知らせください。"
+      },
+      "message_format": "basic"
+    }
+  ]
+}

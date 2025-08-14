@@ -1,0 +1,6 @@
+{
+  "answer": {
+    "user_input": "Prompt FlowからAzure OpenAIを呼び出せた？",
+    "answer": "はい、Prompt FlowからAzure OpenAIを呼び出すことは可能です。具体的には、Azure OpenAIのAPIを利用して、テキスト生成や質問応答などの結果を得ることができます。設定方法には、APIキーの取得やエンドポイントの設定が含まれます。詳細な手順が必要であれば、お知らせください。"
+  }
+}

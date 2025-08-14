@@ -1,0 +1,22 @@
+# flow.dag.yaml - Prompt Flowのフローモデル設定ファイル
+
+nodes:
+  - name: gpt_answer         # ノード名（任意）
+    type: python             # 実行タイプ（Python関数）
+    source:
+      path: flow.py          # 関数定義ファイル
+      function: ask_gpt4o    # 実行する関数名
+    inputs:
+      prompt: ${inputs.user_input}  # ユーザー入力を関数の引数に渡す
+
+# ← ここを辞書（マップ）形式にする
+inputs:
+  user_input:
+    type: string
+    default: "Prompt FlowからAzure OpenAIを呼び出せた？"
+
+# ← ここも辞書（マップ）形式にする
+outputs:
+  answer:
+    type: string
+    reference: ${gpt_answer.output}  # gpt_answerノードの結果を出力に設定
