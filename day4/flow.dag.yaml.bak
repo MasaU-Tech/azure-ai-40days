@@ -1,0 +1,20 @@
+inputs:
+  answer:
+    type: string
+  ground_truth:
+    type: string
+
+nodes:
+  - name: evaluator
+    type: python
+    source:
+      path: evaluation_flow.py
+      function: evaluate
+    inputs:
+      answer: ${inputs.answer}
+      ground_truth: ${inputs.ground_truth}
+
+outputs:
+  score:
+    type: float                # ← number はNG。floatに修正。
+    reference: ${nodes.evaluator.outputs.output}  # ← 完全参照に修正。

@@ -1,0 +1,20 @@
+inputs:
+  answer:
+    type: string
+  ground_truth:
+    type: string
+
+nodes:
+  - name: accuracy
+    type: python
+    source:
+      type: code
+      path: evaluation_flow.py   # Python ツール（@tool 関数）側で answer と ground_truth を受け取り、0/1 を返す想定
+    inputs:
+      answer: ${inputs.answer}
+      ground_truth: ${inputs.ground_truth}
+
+outputs:
+  accuracy:
+    type: string
+    reference: ${accuracy.output}
