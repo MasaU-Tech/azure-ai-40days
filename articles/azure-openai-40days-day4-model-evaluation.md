@@ -90,7 +90,7 @@ ng_count,2
 ![](/images/day4/day4-summary-csv.png) <!-- day4-summary-csv.png -->
 
 - day4のフォルダ構成
-![](/day4-folder-structure.png) <!-- day4-rows-csv-preview.png -->
+![](/images/day4/day4-folder-structure.png) <!-- day4-rows-csv-preview.png -->
 
 ---
 
