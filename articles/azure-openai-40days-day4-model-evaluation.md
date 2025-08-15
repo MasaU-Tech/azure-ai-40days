@@ -80,17 +80,17 @@ ng_count,2
 
 ## スクリーンショット
 
-<!-- pf flow test 実行成功のPowerShell出力 -->
+- pf flow test 実行成功のPowerShell出力
 ![](/images/day4/day4-pf-flow-test-success.png) <!-- day4-pf-flow-test-success.png -->
 
-<!-- pf run show-details の評価結果テーブル -->
+- pf run show-details の評価結果テーブル
 ![](/images/day4/day4-pf-run-show-details-table.png) <!-- day4-pf-run-show-details-table.png -->
 
-<!-- rows.csv の冒頭5行 -->
-![](/images/day4/day4-rows-csv-preview.png) <!-- day4-rows-csv-preview.png -->
-
-<!-- summary.csv の内容 -->
+- rows.csvとsummary.csv の内容
 ![](/images/day4/day4-summary-csv.png) <!-- day4-summary-csv.png -->
+
+- day4のフォルダ構成
+![](/day4-folder-structure.png) <!-- day4-rows-csv-preview.png -->
 
 ---
 
