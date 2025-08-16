@@ -3,7 +3,7 @@ title: "【Azure OpenAI 40日】Day5: モデル評価結果の可視化と閾値
 emoji: 📊
 type: "tech" # tech: 技術記事 / idea: アイデア
 topics: ["Azure", "OpenAI", "PromptFlow", "評価", "可視化"]
-published: false
+published: true
 ---
 
 # TL;DR
