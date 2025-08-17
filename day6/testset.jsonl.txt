@@ -1,0 +1,5 @@
+{"id": 1, "question": "Azure OpenAIとは？", "expected": "Azure上でOpenAIモデルを安全に利用", "keywords": "Azure,OpenAI"}
+{"id": 2, "question": "gpt-4o miniの用途は？", "expected": "低コストで高速な推論", "keywords": "低コスト,高速"}
+{"id": 3, "question": "Prompt Flowの役割は？", "expected": "プロンプトや評価をワークフロー化", "keywords": "ワークフロー,評価"}
+{"id": 4, "question": "RAGの利点は？", "expected": "外部知識を検索して回答精度向上", "keywords": "検索,知識"}
+{"id": 5, "question": "コスト最適化の基本は？", "expected": "短いプロンプトと小さいモデルを優先", "keywords": "プロンプト,モデル"}
