@@ -3,7 +3,7 @@ title: "【Azure OpenAI 40日】Day6: プロンプト改善を定量評価する
 emoji: "📊"
 type: "tech"
 topics: ["azure","openai","python","prompt","evaluation"]
-published: false
+published: true
 ---
 
 ## ✍️ TL;DR
