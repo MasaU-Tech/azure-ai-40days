@@ -5,7 +5,7 @@ tags: ["Azure", "OpenAI", "Python", "Serverless", "Functions"]
 emoji: "⚡"
 type: "tech"
 topics: ["azure", "openai", "python", "serverless", "functions"]
-published: false
+published: true
 ---
 
 ## 🧭 今日のゴール
