@@ -153,7 +153,7 @@ $res.answer
 - `InvalidURL: ... '\n'` → local.settings.json に改行混入 → `.strip()` + 末尾`/`補正
 - 文字化け（å·ä½…） → PowerShellをUTF-8設定 ＋ `charset=utf-8` をHttpResponseに追加
 
-![](images/day7/powershell-error.png)
+![](/images/day7/powershell-error.png)
 
 ---
 
