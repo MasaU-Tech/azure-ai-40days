@@ -8,7 +8,7 @@ topics: ["azure", "openai", "python", "serverless", "functions"]
 published: true
 ---
 
-TL;DR
+## TL;DR
 Azure Functions を使うと Azure OpenAI を簡単に API 化できる
 - function_app.py 内で SDK を呼び出し、HTTPエンドポイント /api/chat を公開
 - PowerShell から JSON 応答を取得、日本語応答を確認済み
