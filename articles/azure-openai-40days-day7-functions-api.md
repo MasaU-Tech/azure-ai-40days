@@ -56,7 +56,7 @@ pip install azure-functions "openai>=1.40.0"
 pip freeze > requirements.txt
 ```
 
-!<>(/images/day7/powershell-init.png) 
+![](/images/day7/powershell-init.png) 
 
 ---
 
@@ -126,7 +126,7 @@ $res | ConvertTo-Json -Depth 6
 $res.answer
 ```
 
-!<>(/images/day7/powershell-success.png)
+![](/images/day7/powershell-success.png)
 
 ---
 
@@ -153,7 +153,7 @@ $res.answer
 - `InvalidURL: ... '\n'` → local.settings.json に改行混入 → `.strip()` + 末尾`/`補正
 - 文字化け（å·ä½…） → PowerShellをUTF-8設定 ＋ `charset=utf-8` をHttpResponseに追加
 
-!<>(images/day7/powershell-error.png)
+![](images/day7/powershell-error.png)
 
 ---
 
