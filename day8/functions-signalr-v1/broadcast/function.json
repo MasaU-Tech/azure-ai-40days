@@ -1,0 +1,10 @@
+﻿{
+  "scriptFile": "__init__.py",
+  "entryPoint": "main",
+  "bindings": [
+    { "authLevel": "anonymous", "type": "httpTrigger", "direction": "in", "name": "req", "methods": [ "post" ] },
+    { "type": "signalR", "direction": "out", "name": "signalRMessages",
+      "hubName": "chat", "connectionStringSetting": "AzureSignalRConnectionString" },
+    { "type": "http", "direction": "out", "name": "$return" }
+  ]
+}

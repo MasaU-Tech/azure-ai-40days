@@ -1,0 +1,67 @@
+﻿<!doctype html>
+<meta charset="utf-8" />
+<title>Day8 Realtime Chat (clean)</title>
+<style>
+  body { font-family: ui-sans-serif, system-ui, -apple-system; padding: 20px; }
+  input, button { font-size: 16px; }
+  #log { padding:12px; border:1px solid #ccc; border-radius:8px; min-height:160px; white-space:pre-wrap; }
+</style>
+
+<h1>Realtime Tokens (clean)</h1>
+<label>Base URL（FunctionsのURL）:</label>
+<input id="base" value="http://localhost:7082" style="width: 280px" />
+<br/><br/>
+<input id="prompt" value="俳句で自己紹介して" style="width:60%" />
+<button id="send">送信</button>
+<button id="clear">クリア</button>
+<pre id="log"></pre>
+
+<!-- SignalR ブラウザ用クライアント -->
+<script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@9.0.6/dist/browser/signalr.min.js"></script>
+<script>
+(async () => {
+  const $ = (id) => document.getElementById(id);
+  const log = (t) => { $("log").textContent += t; };
+
+  $("clear").onclick = () => { $("log").textContent = ""; };
+
+  async function connect() {
+    const base = $("base").value.replace(/\/$/, "");
+    // negotiate（POST）で {url, accessToken} を取得
+    const nego = await fetch(base + "/api/negotiate", { method:"POST" }).then(r => {
+      if (!r.ok) throw new Error("negotiate failed: " + r.status);
+      return r.json();
+    });
+
+    const conn = new signalR.HubConnectionBuilder()
+      .withUrl(nego.url, { accessTokenFactory: () => nego.accessToken })
+      .withAutomaticReconnect()
+      .build();
+
+    conn.on("token", t => { log(t); });
+    conn.onreconnecting(() => log("\n…reconnecting…\n"));
+    conn.onreconnected(() => log("\n…reconnected…\n"));
+    await conn.start();
+    return { conn, base };
+  }
+
+  let connObj = null;
+  try { connObj = await connect(); }
+  catch (e) {
+    console.error(e);
+    log("❌ SignalR接続に失敗: " + e.message + "\n");
+  }
+
+  $("send").onclick = async () => {
+    const base = $("base").value.replace(/\/$/, "");
+    const p = $("prompt").value;
+    if (!p) return;
+    log(">> " + p + "\n\n");
+    await fetch(base + "/api/chat_stream", {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ prompt: p })
+    }).catch(e => log("\n❌ chat_stream error: " + e.message + "\n"));
+  };
+})();
+</script>
