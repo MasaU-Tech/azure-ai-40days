@@ -244,17 +244,17 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 ## ✅ 検証結果
 
 1. **リアルタイム配信の様子（必須）**  
-![Realtime tokens](../images/day8/realtime-stream1.png)
-![Realtime tokens](../images/day8/realtime-stream2.png)
+![Realtime tokens](/images/day8/realtime-stream1.png)
+![Realtime tokens](/images/day8/realtime-stream2.png)
 
 2. **negotiate の成功（任意）**  
-![Negotiate JSON](../images/day8/negotiate-json.png)
+![Negotiate JSON](/images/day8/negotiate-json.png)
 
 3. **Functions ホストの起動ログ（任意）**  
-![func start log](../images/day8/func-start.png)
+![func start log](/images/day8/func-start.png)
 
 4. **broadcast 200 OK（オプション）**  
-![broadcast 200 OK](../images/day8/broadcast-200.png)
+![broadcast 200 OK](/images/day8/broadcast-200.png)
 
 
 ---
