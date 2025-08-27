@@ -6,8 +6,6 @@ topics: ["azure","functions","signalr","openai","python"]
 published: true
 ---
 
-> Windows 11 / PowerShell / VS Code / Python 3.11 前提。Azure OpenAI の接続情報は `C:\dev\azure-ai-40days\.env` に保存済み（Day1–7）。Day8 は **Functions（Python, v1）+ SignalR** で **トークン逐次配信**をローカル完走します。
-
 ## ✍️ TL;DR
 - 到達点: Functions（Python v1）＋SignalR で **LLM 応答を逐次配信**し、ブラウザで体感できる状態にした  
 - 学び: SignalR 出力は **`func.Out[str]` に JSON**、`negotiate` は **HTTP out ($return)** 必須、`"$return"` は **単一引用ヒアストリング**で JSON 保存  
