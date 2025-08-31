@@ -121,8 +121,6 @@ for d in sc.search("Azure", top=3):
     print(d.get("metadata_storage_name"), (d.get("content","")[:60] or "").replace("\n"," "))
 ```
 
-> ⚠️注意: スクショに**キーや接続文字列を写さない**こと。
-
 ---
 
 ## ✅ 検証結果
@@ -136,11 +134,11 @@ document_count = 2
 ```
 
 * 画像（任意）:
-  ![Search Overview](../images/day10/search-overview.png)
-  ![Index Fields](../images/day10/search-index-fields.png)
-  ![Indexer Success](../images/day10/search-indexer-success.png)
-  ![Blob List](../images/day10/blob-container-list.png)
-  ![Terminal](../images/day10/terminal-search-result.png)
+  ![Search Overview](/images/day10/search-overview.png)
+  ![Index Fields](/images/day10/search-index-fields.png)
+  ![Indexer Success](/images/day10/search-indexer-success.png)
+  ![Blob List](/images/day10/blob-container-list.png)
+  ![Terminal](/images/day10/terminal-search-result.png)
 
 ---
 
