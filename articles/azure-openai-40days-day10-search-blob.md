@@ -133,11 +133,14 @@ document_count = 2
 - readme.md # 社内手順メモ Azure OpenAI と Azure AI Search を連携して...
 ```
 
-* 画像（任意）:
   ![Search Overview](/images/day10/search-overview.png)
+
   ![Index Fields](/images/day10/search-index-fields.png)
+  
   ![Indexer Success](/images/day10/search-indexer-success.png)
+  
   ![Blob List](/images/day10/blob-container-list.png)
+  
   ![Terminal](/images/day10/terminal-search-result.png)
 
 ---
