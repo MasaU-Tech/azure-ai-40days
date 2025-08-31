@@ -1,0 +1,222 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <title>Day9 Realtime Chat UI+</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    :root { --w: 900px; --gap: 12px; --radius: 16px; }
+    * { box-sizing: border-box; }
+    body { margin:0; background:#f6f7f9; color:#111; font-family: system-ui, "Segoe UI", "Noto Sans JP", sans-serif; }
+    .app { max-width: var(--w); margin: 0 auto; min-height: 100vh; display:flex; flex-direction:column; }
+    header { position:sticky; top:0; background:#fff; border-bottom:1px solid #eee; padding:10px 16px; display:flex; gap:12px; align-items:center; }
+    header h1 { margin:0; font-size:18px; }
+    .status { display:flex; align-items:center; gap:6px; font-size:12px; color:#555; }
+    .dot { width:10px; height:10px; border-radius:50%; background:#bbb; }
+    .dot.on { background:#22c55e; }
+    .bar { margin-left:auto; display:flex; gap:8px; align-items:center; }
+    input[type="text"]{ padding:6px 8px; border:1px solid #ddd; border-radius:10px; width:260px; }
+    label { font-size:12px; color:#555; }
+    main { flex:1; padding: 16px; overflow:auto; }
+    .msg { display:flex; margin: 8px 0; gap:8px; }
+    .msg .bubble { max-width: 74%; padding:10px 12px; border-radius: var(--radius); background:#fff; border:1px solid #eee; white-space:pre-wrap; word-break:break-word; line-height:1.5; }
+    .msg.user { justify-content:flex-end; }
+    .msg.user .bubble { background:#e8f1ff; border-color:#d4e6ff; }
+    .meta { font-size:11px; color:#777; margin:2px 6px; }
+    .controls { display:flex; gap:10px; align-items:center; padding:8px 16px; background:#fff; border-top:1px solid #eee; }
+    .composer { flex:1; display:flex; gap: var(--gap); }
+    textarea { flex:1; resize:vertical; min-height:44px; padding:10px; border:1px solid #ddd; border-radius:12px; }
+    button { padding:8px 14px; border:0; border-radius:12px; background:#0a66ff; color:#fff; cursor:pointer; }
+    button.secondary { background:#e5e7eb; color:#111; }
+    button:disabled { opacity:.6; cursor:not-allowed; }
+    .sending { display:flex; gap:6px; align-items:center; font-size:12px; color:#555; }
+    .sending .sdot { width:6px; height:6px; border-radius:50%; background:#555; animation: b 1s infinite ease-in-out; }
+    .sending .sdot:nth-child(2){ animation-delay:.15s } .sending .sdot:nth-child(3){ animation-delay:.3s }
+    .hidden { display:none; }
+    @keyframes b { 0%,80%,100%{ transform:scale(0); } 40% { transform:scale(1); } }
+    footer { padding:10px 16px; font-size:12px; color:#666; }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Day9 Realtime Chat UI+</h1>
+      <div class="status"><span id="connDot" class="dot"></span><span id="connText">Disconnected</span></div>
+      <div class="bar">
+        <label for="base">Base URL:</label>
+        <input id="base" type="text" placeholder="http://localhost:7082" />
+        <button id="save" class="secondary">保存</button>
+        <button id="reconnect" class="secondary">再接続</button>
+        <button id="clear" class="secondary">履歴クリア</button>
+      </div>
+    </header>
+
+    <main id="messages"></main>
+
+    <div class="controls">
+      <form id="form" class="composer">
+        <textarea id="input" placeholder="メッセージを入力…（Ctrl+Enterで送信）"></textarea>
+        <button id="send" type="submit">送信</button>
+      </form>
+      <div id="sending" class="sending hidden" aria-live="polite">
+        <span class="sdot"></span><span class="sdot"></span><span class="sdot"></span> 送信中…
+      </div>
+    </div>
+
+    <footer>
+      ※ Day8の設計：Functions <code>/api/negotiate</code>（SignalR接続）＋ <code>/api/chat_stream</code>（逐次配信）をそのまま利用します。
+    </footer>
+  </div>
+
+  <!-- SignalR ブラウザ用クライアント -->
+  <script src="https://cdn.jsdelivr.net/npm/@microsoft/signalr@9.0.6/dist/browser/signalr.min.js"></script>
+  <script>
+  (()=>{
+    // === 設定・状態 ===
+    const $ = (id)=>document.getElementById(id);
+    const elMsg = $("messages");
+    const elInput = $("input");
+    const elForm = $("form");
+    const elSending = $("sending");
+    const elSendBtn = $("send");
+    const elBase = $("base");
+    const elSave = $("save");
+    const elReconnect = $("reconnect");
+    const elClear = $("clear");
+    const connDot = $("connDot");
+    const connText = $("connText");
+
+    const STORE = {
+      BASE: "day9-base",
+      MSGS: "day9-messages"
+    };
+
+    let connection = null;
+    let currentAssistantIndex = -1;
+    let sending = false;
+
+    // === 永続化 ===
+    function loadBase(){ return localStorage.getItem(STORE.BASE) || "http://localhost:7082"; }
+    function saveBase(v){ localStorage.setItem(STORE.BASE, v); }
+    function loadMessages(){ try{ return JSON.parse(localStorage.getItem(STORE.MSGS)||"[]"); }catch{ return []; } }
+    function saveMessages(arr){ localStorage.setItem(STORE.MSGS, JSON.stringify(arr)); }
+
+    let messages = loadMessages();
+    elBase.value = loadBase();
+
+    // === UI描画 ===
+    function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c])); }
+    function render(){
+      elMsg.innerHTML = messages.map(m => `
+        <div class="msg ${m.role}">
+          <div class="bubble">${escapeHtml(m.content||"")}</div>
+          <div class="meta">${new Date(m.ts).toLocaleTimeString()}</div>
+        </div>`).join("");
+      elMsg.scrollTop = elMsg.scrollHeight;
+    }
+    function setBusy(v){ sending = v; elSending.classList.toggle("hidden", !v); elSendBtn.disabled = v; }
+    function setConnStatus(connected){
+      connDot.classList.toggle("on", !!connected);
+      connText.textContent = connected ? "Connected" : "Disconnected";
+    }
+
+    // 初回ウェルカム
+    if(messages.length===0){
+      messages.push({ role:"assistant", content:"こんにちは！Day9 UI です。メッセージを送るとトークンが逐次表示されます。", ts: Date.now() });
+      saveMessages(messages);
+    }
+    render();
+
+    // === SignalR 接続 ===
+    async function connect(){
+      const base = elBase.value.replace(/\/$/, "");
+      try{
+        const nego = await fetch(base + "/api/negotiate", { method:"POST" });
+        if(!nego.ok) throw new Error("negotiate failed: " + nego.status);
+        const data = await nego.json();
+        const conn = new signalR.HubConnectionBuilder()
+          .withUrl(data.url, { accessTokenFactory: () => data.accessToken })
+          .withAutomaticReconnect()
+          .build();
+
+        conn.on("token", t => {
+          // 逐次トークンをアシスタント最新メッセージに追記
+          if(currentAssistantIndex < 0){
+            // 応答プレースホルダを作っておく
+            currentAssistantIndex = messages.push({ role:"assistant", content:"", ts: Date.now() }) - 1;
+          }
+          messages[currentAssistantIndex].content += t;
+          saveMessages(messages);
+          render();
+        });
+
+        conn.onreconnecting(() => { setConnStatus(false); });
+        conn.onreconnected(() => { setConnStatus(true); });
+        await conn.start();
+        setConnStatus(true);
+        return conn;
+      }catch(e){
+        console.error(e);
+        setConnStatus(false);
+        return null;
+      }
+    }
+
+    async function ensureConnection(){
+      if(connection && connection.state === "Connected") return connection;
+      connection = await connect();
+      return connection;
+    }
+
+    // === 送信処理 ===
+    elForm.addEventListener("submit", async (e)=>{
+      e.preventDefault();
+      const text = $("input").value.trim();
+      if(!text) return;
+
+      // 1) ユーザーメッセージを追加
+      messages.push({ role:"user", content:text, ts: Date.now() });
+      saveMessages(messages); render();
+      $("input").value = "";
+      setBusy(true);
+
+      // 2) アシスタント用のプレースホルダをリセット
+      currentAssistantIndex = -1;
+
+      try{
+        await ensureConnection(); // 無ければ接続
+        const base = elBase.value.replace(/\/$/, "");
+        const res = await fetch(base + "/api/chat_stream", {
+          method:"POST",
+          headers: { "Content-Type":"application/json" },
+          body: JSON.stringify({ prompt: text })
+        });
+        // chat_stream の完了をもって送信中を解除（トークンは SignalR イベントで追記済み）
+        if(!res.ok){
+          // エラー時はメッセージ欄にも表示
+          const msg = "HTTP " + res.status + " " + (await res.text());
+          messages.push({ role:"assistant", content:"[エラー] " + msg, ts: Date.now() });
+          saveMessages(messages); render();
+        }
+      }catch(err){
+        messages.push({ role:"assistant", content:"[エラー] " + err.message, ts: Date.now() });
+        saveMessages(messages); render();
+      }finally{
+        setBusy(false);
+      }
+    });
+
+    // === UI操作 ===
+    elSave.onclick = ()=>{ saveBase(elBase.value.trim()); };
+    elReconnect.onclick = async ()=>{ if(connection) try{ await connection.stop(); }catch{}; connection = null; await ensureConnection(); };
+    elClear.onclick = ()=>{ if(confirm("履歴をすべて消去しますか？")){ messages = []; saveMessages(messages); render(); } };
+
+    // Ctrl+Enterで送信
+    $("input").addEventListener("keydown", (e)=>{ if(e.key==="Enter" && (e.ctrlKey||e.metaKey)){ e.preventDefault(); elForm.requestSubmit(); } });
+
+    // 起動時に接続
+    ensureConnection();
+  })();
+  </script>
+</body>
+</html>
