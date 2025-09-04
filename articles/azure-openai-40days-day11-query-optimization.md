@@ -94,10 +94,10 @@ for q in [base_q, exp_q]:
 ```
 
 📸 スクリーンショット：検索比較結果
-![query-comparison](../images/day11/query-comparison.png)
+![query-comparison](/images/day11/query-comparison.png)
 
 📸 スクリーンショット：Top3 デバッグ出力
-![topk-debug](../images/day11/topk-debug.png)
+![topk-debug](/images/day11/topk-debug.png)
 
 ---
 
